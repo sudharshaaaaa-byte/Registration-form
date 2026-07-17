@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Registration Form -->
+    <div id="regpage">
+
+        <h1>Registration Form</h1>
+
+        <div>
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+            <span id="nameerror"></span>
+        </div>
+
+        <div>
+            <label>Email</label>
+            <input type="text" id="mail" placeholder="Enter your email">
+            <span id="mailerror"></span>
+        </div>
+
+        <div>
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter your password">
+            <span id="passworderror"></span>
+        </div>
+
+        <button id="btn" disabled>Register Now!</button>
+
+    </div>
+
+    <!-- Success Message -->
+    <div id="successmsg" class="hidden">
+
+        <h1>✅ Registration Successful!</h1>
+
+        <p>Your account has been created successfully.</p>
+
+    </div>
+
+    <script>
+
+        const name = document.getElementById("name");
+        const mail = document.getElementById("mail");
+        const password = document.getElementById("password");
+
+        const nameerror = document.getElementById("nameerror");
+        const mailerror = document.getElementById("mailerror");
+        const passworderror = document.getElementById("passworderror");
+
+        const btn = document.getElementById("btn");
+
+        const regpage = document.getElementById("regpage");
+        const successmsg = document.getElementById("successmsg");
+
+        function validateForm() {
+
+            let validName = false;
+            let validMail = false;
+            let validPassword = false;
+
+            // Name Validation
+            let namePattern = /^[A-Za-z]+$/;
+
+            if (name.value.trim() === "") {
+                nameerror.textContent = "Name is required *";
+            }
+            else if (!namePattern.test(name.value.trim())) {
+                nameerror.textContent = "Only letters are allowed *";
+            }
+            else {
+                nameerror.textContent = "";
+                validName = true;
+            }
+
+            // Email Validation
+            let mailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+            if (mail.value.trim() === "") {
+                mailerror.textContent = "Email is required *";
+            }
+            else if (!mailPattern.test(mail.value.trim())) {
+                mailerror.textContent = "Invalid Email *";
+            }
+            else {
+                mailerror.textContent = "";
+                validMail = true;
+            }
+
+            // Password Validation
+            if (password.value.trim() === "") {
+                passworderror.textContent = "Password is required *";
+            }
+            else if (password.value.length < 6) {
+                passworderror.textContent = "Minimum 6 characters *";
+            }
+            else {
+                passworderror.textContent = "";
+                validPassword = true;
+            }
+
+            // Enable or Disable Button
+            if (validName && validMail && validPassword) {
+                btn.disabled = false;
+            }
+            else {
+                btn.disabled = true;
+            }
+
+        }
+
+        // Real-time Validation
+        name.addEventListener("input", validateForm);
+        mail.addEventListener("input", validateForm);
+        password.addEventListener("input", validateForm);
+
+        // Register Button
+        btn.addEventListener("click", function () {
+
+            regpage.style.display = "none";
+            successmsg.classList.remove("hidden");
+
+        });
+
+    </script>
+
+</body>
+</html>
